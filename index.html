@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>I Have a Question... 🌹</title>
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #ffe5ec, #ffc2d1);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            overflow: hidden;
+            touch-action: manipulation; 
+        }
+
+        .container {
+            text-align: center;
+            background: white;
+            padding: 30px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 360px;
+            width: 100%;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 {
+            color: #ff4d6d;
+            font-size: 1.8rem;
+            margin-top: 0;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #4a4a4a;
+            font-size: 1.05rem;
+            margin-bottom: 25px;
+            line-height: 1.5;
+        }
+
+        .gif-container img {
+            width: 130px;
+            height: 130px;
+            margin-bottom: 15px;
+            object-fit: contain;
+        }
+
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            height: 60px;
+            position: relative;
+        }
+
+        button {
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+            transition: background-color 0.2s, transform 0.1s;
+        }
+
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+            animation: pulse 1.5s infinite;
+        }
+
+        #noBtn {
+            background-color: #a3b18a;
+            color: white;
+            position: absolute;
+            right: 15%; 
+            transition: all 0.1s ease;
+        }
+
+        .options-list {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .option-btn {
+            background-color: #f8f9fa;
+            color: #4a4a4a;
+            border: 2px solid #ffe5ec;
+            padding: 14px;
+            border-radius: 15px;
+            font-size: 1rem;
+            width: 100%;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .option-btn:active, .option-btn:hover {
+            background-color: #ffe5ec;
+            border-color: #ff4d6d;
+            color: #ff4d6d;
+            transform: scale(1.02);
+        }
+
+        .option-icon {
+            font-size: 1.3rem;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .celebrate {
+            color: #2a9d8f;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SCREEN 1: The Question -->
+    <div class="container" id="questionCard">
+        <div class="gif-container">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3Bnd290YXY5cmZicm90cXA2Y3F6eXN0bXp6Nm9pYmN4N3R4ZndpbyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute text animation">
+        </div>
+        <h1>Hey there! 😊</h1>
+        <p>I was wondering... would you like to go out on a date with me?</p>
+        
+        <div class="btn-group">
+            <button id="yesBtn" onclick="goToOptions()">Yes!</button>
+            <button id="noBtn" ontouchstart="moveNoButton(event)" onmouseover="moveNoButton(event)" onclick="moveNoButton(event)">No</button>
+        </div>
+    </div>
+
+    <!-- SCREEN 2: Where to go? -->
+    <div class="container hidden" id="optionsCard">
+        <div class="gif-container">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM3NidHhmY3h4ZnB0cW81cnl6OHFhN2ZhdGZrbTZhbmtsM3BtMGo4OSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/Ym6t9YfH9N7XN6HooM/giphy.gif" alt="Thinking face">
+        </div>
+        <h1>Yay! 🎉 Where to?</h1>
+        <p>Pick the vibe:</p>
+        
+        <div class="options-list">
+            <button class="option-btn" onclick="finalizeDate('a cozy coffee date ☕')">
+                <span class="option-icon">☕</span> Cozy Coffee & Conversation
+            </button>
+            <button class="option-btn" onclick="finalizeDate('a delicious dinner date 🍕')">
+                <span class="option-icon">🍕</span> Nice Dinner & Drinks
+            </button>
+            <button class="option-btn" onclick="finalizeDate('a surprise adventure 🎡')">
+                <span class="option-icon">🎡</span> Something Fun & Adventurous
+            </button>
+        </div>
+    </div>
+
+    <!-- SCREEN 3: Custom Success Confirmation -->
+    <div class="container hidden" id="successCard">
+        <div class="gif-container">
+            <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbW00MW15ODZidm03Y3Y4OG1pMm80OHg1bXN5bms3bnd0NDZscXg0NyZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9cw/dU794vGv6XwV8SOnwP/giphy.gif" alt="Happy dance">
+        </div>
+        <h1 class="celebrate">It's a Date! 😍</h1>
+        <p>Locking in <span id="chosenVibe" style="font-weight: bold; color: #ff4d6d;"></span>!</p>
+        <p style="font-size: 1rem; color: #666; border-top: 1px dashed #ffe5ec; padding-top: 15px; margin-top: 15px;">
+            Now your turn: Go message me and ask me out in a fun way! 😉✨
+        </p>
+    </div>
+
+    <script>
+        function moveNoButton(event) {
+            if (event) event.preventDefault(); 
+            
+            const noBtn = document.getElementById('noBtn');
+            const padding = 30;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+            
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+            
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        function goToOptions() {
+            document.getElementById('questionCard').classList.add('hidden');
+            document.getElementById('optionsCard').classList.remove('hidden');
+        }
+
+        function finalizeDate(vibe) {
+            document.getElementById('optionsCard').classList.add('hidden');
+            document.getElementById('chosenVibe').innerText = vibe;
+            document.getElementById('successCard').classList.remove('hidden');
+        }
+    </script>
+
+</body>
+</html>
